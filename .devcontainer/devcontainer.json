@@ -1,0 +1,45 @@
+{
+	"name": "C# (.NET), MS SQL and RabbitMQ",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "workspace",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"portsAttributes": {
+		"5000": {
+			"onAutoForward": "notify"
+		},
+		"5001": {
+			"onAutoForward": "notify",
+			"protocol": "https"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"mssql.connections": [
+					{
+						"server": "db,1433",
+						"database": "",
+						"authenticationType": "SqlLogin",
+						"user": "sa",
+						"password": "P4ssw0rd",
+						"emptyPasswordInput": false,
+						"savePassword": true,
+						"profileName": "mssql-container",
+						"trustServerCertificate": true
+					}
+				]
+			},
+			"extensions": [
+				"ms-dotnettools.csharp",
+				"ms-mssql.mssql",
+				"rohinivsenthil.rabbitrace",
+				"fernandoescolar.vscode-solution-explorer"
+			]
+		}
+	},
+	"postCreateCommand": "SQLCMDPASSWORD=P4ssw0rd bash .devcontainer/mssql/postCreateCommand.sh db './bin/Debug/' './.devcontainer/mssql'",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers-contrib/features/rabbitmq-asdf:1": {}
+	}
+}

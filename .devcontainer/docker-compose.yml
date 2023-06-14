@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  workspace:
+    networks:
+      - UrlShortener
+    ports:
+      - 7294:7294
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+
+  db:
+    hostname: db
+    networks:
+      - UrlShortener
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: unless-stopped
+    environment:
+      SA_PASSWORD: P4ssw0rd
+      ACCEPT_EULA: Y
+
+  # queue:
+  #   hostname: queue
+  #   networks:
+  #     - UrlShortener
+  #   image: rabbitmq:3-management-alpine
+  #   restart: unless-stopped
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: sa
+  #     RABBITMQ_DEFAULT_PASS: P4ssw0rd
+  #     RABBITMQ_DEFAULT_VHOST: queue
+
+networks:
+  UrlShortener:
