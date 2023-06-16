@@ -12,14 +12,10 @@
       // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceFolder}/UrlShortener/UrlShortener.Api/bin/Debug/net6.0/UrlShortener.Api.dll",
       "launchSettingsFilePath": "${workspaceFolder}/UrlShortener/UrlShortener.Api/Properties/launchSettings.json",
-      "args": [
-        "--launchProfile",
-        "ApiDev"
-      ],
       "cwd": "${workspaceFolder}/UrlShortener/UrlShortener.Api",
       "launchBrowser": {
         "enabled": true,
-        "args": "${auto-detect-url}"
+        "args": "${auto-detect-url}/swagger/index.html"
       },
       "stopAtEntry": false,
       // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser

@@ -3,12 +3,15 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "workspace",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"remoteEnv": {
+		"CODESPACE_NAME": "UrlShortener"
+	},
 	"portsAttributes": {
 		"5000": {
-			"onAutoForward": "notify"
+			"onAutoForward": "silent"
 		},
 		"5001": {
-			"onAutoForward": "notify",
+			"onAutoForward": "silent",
 			"protocol": "https"
 		}
 	},
@@ -32,14 +35,14 @@
 			"extensions": [
 				"ms-dotnettools.csharp",
 				"ms-mssql.mssql",
-				"rohinivsenthil.rabbitrace",
+				// "rohinivsenthil.rabbitrace",
 				"fernandoescolar.vscode-solution-explorer"
 			]
 		}
 	},
 	"postCreateCommand": "SQLCMDPASSWORD=P4ssw0rd bash .devcontainer/mssql/postCreateCommand.sh db './bin/Debug/' './.devcontainer/mssql'",
 	"features": {
-		"ghcr.io/devcontainers/features/node:1": {},
-		"ghcr.io/devcontainers-contrib/features/rabbitmq-asdf:1": {}
+		// "ghcr.io/devcontainers-contrib/features/rabbitmq-asdf:1": {},
+		"ghcr.io/devcontainers/features/node:1": {}
 	}
 }

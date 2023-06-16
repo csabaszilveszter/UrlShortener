@@ -1,5 +1,9 @@
 {
   "vssolution.altSolutionFolders": [
     "UrlShortener"
-  ]
+  ],
+  "vssolution.showMode": "explorer",
+  "explorer.openEditors.sortOrder": "fullPath",
+  "search.quickOpen.includeSymbols": true,
+  "dotnet.defaultSolution": "UrlShortener/UrlShortener.sln"
 }

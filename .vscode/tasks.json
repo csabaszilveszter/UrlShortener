@@ -33,7 +33,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/Api/UrlShortener.Api.csproj"
+        "${workspaceFolder}/UrlShortener/UrlShortener.Api.csproj"
       ],
       "problemMatcher": "$msCompile"
     }
