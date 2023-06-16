@@ -16,7 +16,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();  // doesn't work on codespaces (https://stackoverflow.com/a/63340445)
 
 app.UseAuthorization();
 

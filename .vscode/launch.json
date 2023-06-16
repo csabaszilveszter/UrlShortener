@@ -10,13 +10,17 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/Api/bin/Debug/net6.0/Api.dll",
-      "launchSettingsFilePath": "${workspaceFolder}/Api/Properties/launchSettings.json",
+      "program": "${workspaceFolder}/UrlShortener/UrlShortener.Api/bin/Debug/net6.0/UrlShortener.Api.dll",
+      "launchSettingsFilePath": "${workspaceFolder}/UrlShortener/UrlShortener.Api/Properties/launchSettings.json",
       "args": [
         "--launchProfile",
         "ApiDev"
       ],
-      "cwd": "${workspaceFolder}/Api",
+      "cwd": "${workspaceFolder}/UrlShortener/UrlShortener.Api",
+      "launchBrowser": {
+        "enabled": true,
+        "args": "${auto-detect-url}"
+      },
       "stopAtEntry": false,
       // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
       "serverReadyAction": {
@@ -28,7 +32,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "sourceFileMap": {
-        "/Api": "${workspaceFolder}/Api"
+        "/UrlShortener.Api": "${workspaceFolder}/UrlShortener/UrlShortener.Api"
       }
     }
   ]
