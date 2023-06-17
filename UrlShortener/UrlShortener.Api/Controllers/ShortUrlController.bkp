@@ -1,0 +1,87 @@
+using Microsoft.AspNetCore.Mvc;
+using UrlShortener.Api.Models;
+using UrlShortener.ShortUrls.UrlShortener;
+
+namespace UrlShortener.Api.Controllers;
+
+[ApiController]
+[ApiConventionType(typeof(DefaultApiConventions))]
+[Route("api/[controller]")]
+public class ShortUrlController : ControllerBase
+{
+  private ShortUrlResponse? response;
+
+  [HttpPost]
+  public IActionResult CreateShortUrl(ShortUrlRequest request)
+  {
+    if (Uri.TryCreate(request.Url, UriKind.Absolute, out var url))
+    {
+      var shortUrl = new ShortUrl(url.ToString());
+      // TODO: save shortUrl to db
+      response = new ShortUrlResponse(
+        shortUrl.Url!,
+        shortUrl.Value,
+        shortUrl.LastUpdatedAt,
+        shortUrl.ExpiresAt
+      );
+      return CreatedAtAction(
+        actionName: nameof(CreateShortUrl),
+        routeValues: new { value = shortUrl.Value },
+        value: response
+      );
+    }
+    return BadRequest($"\"{request.Url}\" is not a valid url");
+  }
+
+  [HttpPut("{value:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public IActionResult UpdateShortUrl([FromRoute] int value, ShortUrlRequest request)
+  {
+    if (Uri.TryCreate(request.Url, UriKind.Absolute, out var url))
+    {
+      if (response != null && response.Value == value)
+      {
+        response = new ShortUrlResponse(
+          url.ToString(),
+          value,
+          DateTime.Now,
+          DateTime.Now.AddHours(1)
+        );
+        return Ok(response);
+      }
+      return NotFound($"\"{value}\" not found");
+
+    }
+    return BadRequest($"\"{request.Url}\" is not a valid url");
+  }
+
+  [HttpGet("{value:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public IActionResult GetShortUrl(int value)
+  {
+    if (response != null && response.Value == value)
+    {
+      return Ok(response);
+    }
+    return NotFound($"\"{value}\" not found");
+  }
+
+  [HttpDelete("{value:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public IActionResult DeleteShortUrl(int value)
+  {
+    if (response != null && response.Value == value)
+    {
+      response = null;
+      return NoContent();
+    }
+    return NotFound($"\"{value}\" not found");
+  }
+}
