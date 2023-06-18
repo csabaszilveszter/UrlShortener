@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using UrlShortener.Api.Models;
 using UrlShortener.Api.Data;
+using UrlShortener.Api.Models;
+using UrlShortener.ShortUrls.UrlShortener;
 
 namespace UrlShortener.Api.Controllers;
 
-
 [Route("api/[controller]")]
-[ApiConventionType(typeof(DefaultApiConventions))]
 [ApiController]
 public class ShortUrlController : ControllerBase
 {
@@ -38,17 +37,17 @@ public class ShortUrlController : ControllerBase
     }
 
     // GET: api/ShortUrl/5
-    [HttpGet("{value}")]
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<ShortUrl>> GetShortUrl(int value)
+    public async Task<ActionResult<ShortUrl>> GetShortUrl(Guid id)
     {
         if (_context.ShortUrl == null)
         {
             return NotFound();
         }
-        var shortUrl = await _context.ShortUrl.FindAsync(value);
+        var shortUrl = await _context.ShortUrl.FindAsync(id);
 
         if (shortUrl == null)
         {
@@ -60,14 +59,14 @@ public class ShortUrlController : ControllerBase
 
     // PUT: api/ShortUrl/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{value}")]
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> PutShortUrl(int value, ShortUrl shortUrl)
+    public async Task<IActionResult> PutShortUrl(Guid id, ShortUrl shortUrl)
     {
-        if (value != shortUrl.Value)
+        if (id != shortUrl.Id)
         {
             return BadRequest();
         }
@@ -80,7 +79,7 @@ public class ShortUrlController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!ShortUrlExists(value))
+            if (!ShortUrlExists(id))
             {
                 return NotFound();
             }
@@ -96,30 +95,35 @@ public class ShortUrlController : ControllerBase
     // POST: api/ShortUrl
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<ShortUrl>> PostShortUrl(ShortUrl shortUrl)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<ActionResult<ShortUrl>> PostShortUrl(ShortUrlRequest request)
     {
         if (_context.ShortUrl == null)
         {
             return Problem("Entity set 'ApplicationContext.ShortUrl'  is null.");
         }
+        if (!Uri.IsWellFormedUriString(request.Url, UriKind.Absolute)) {
+            return BadRequest($"'{request.Url}' is not a valid URL.");
+        }
+        var shortUrl = new ShortUrl(request.Url);
         _context.ShortUrl.Add(shortUrl);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(PostShortUrl), new { value = shortUrl.Value }, shortUrl);
+        return CreatedAtAction(nameof(GetShortUrl), new { id = shortUrl.Id }, shortUrl);
     }
 
     // DELETE: api/ShortUrl/5
-    [HttpDelete("{value}")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> DeleteShortUrl(int value)
+    public async Task<IActionResult> DeleteShortUrl(Guid id)
     {
         if (_context.ShortUrl == null)
         {
             return NotFound();
         }
-        var shortUrl = await _context.ShortUrl.FindAsync(value);
+        var shortUrl = await _context.ShortUrl.FindAsync(id);
         if (shortUrl == null)
         {
             return NotFound();
@@ -131,8 +135,9 @@ public class ShortUrlController : ControllerBase
         return NoContent();
     }
 
-    private bool ShortUrlExists(int value)
+    private bool ShortUrlExists(Guid id)
     {
-        return (_context.ShortUrl?.Any(e => e.Value == value)).GetValueOrDefault();
+        return (_context.ShortUrl?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }
+

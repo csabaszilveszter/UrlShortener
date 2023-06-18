@@ -24,11 +24,9 @@ namespace UrlShortener.Api.Migrations
 
             modelBuilder.Entity("UrlShortener.Api.Models.ShortUrl", b =>
                 {
-                    b.Property<int>("Value")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Value"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
@@ -40,7 +38,10 @@ namespace UrlShortener.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Value");
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.ToTable("ShortUrl");
                 });
