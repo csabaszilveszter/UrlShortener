@@ -68,3 +68,5 @@ dotnet tool install -g dotnet-aspnet-codegenerator --version 6.0.14
 dotnet tool install -g dotnet-ef --version 7.0.7
 
 dotnet restore ./UrlShortener/UrlShortener.sln
+
+dotnet ef database update -p ./UrlShortener/UrlShortener.Api/UrlShortener.Api.csproj
