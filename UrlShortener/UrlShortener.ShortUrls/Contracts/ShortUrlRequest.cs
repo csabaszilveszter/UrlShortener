@@ -1,6 +1,6 @@
 namespace UrlShortener.ShortUrls.UrlShortener;
 
-public record ShortenUrlRequest(
+public record ShortUrlRequest(
   string Url
 // User User 
 );
