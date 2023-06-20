@@ -34,10 +34,7 @@
 			},
 			"extensions": [
 				// "rohinivsenthil.rabbitrace",
-				"ms-dotnettools.csharp",
 				"ms-mssql.mssql",
-				"fernandoescolar.vscode-solution-explorer",
-				"vain0x.csharp-gen-ctor",
 				"ms-dotnettools.csdevkit"
 			]
 		}

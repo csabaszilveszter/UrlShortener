@@ -10,9 +10,9 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/UrlShortener/UrlShortener.Api/bin/Debug/net6.0/UrlShortener.Api.dll",
-      "launchSettingsFilePath": "${workspaceFolder}/UrlShortener/UrlShortener.Api/Properties/launchSettings.json",
-      "cwd": "${workspaceFolder}/UrlShortener/UrlShortener.Api",
+      "program": "${workspaceFolder}/src/Csaba.UrlShortener.Api/bin/Debug/net6.0/Csaba.UrlShortener.Api.dll",
+      "launchSettingsFilePath": "${workspaceFolder}/src/Csaba.UrlShortener.Api/Properties/launchSettings.json",
+      "cwd": "${workspaceFolder}/src/Csaba.UrlShortener.Api",
       "launchBrowser": {
         "enabled": true,
         "args": "${auto-detect-url}/swagger/index.html"
@@ -28,7 +28,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "sourceFileMap": {
-        "/UrlShortener.Api": "${workspaceFolder}/UrlShortener/UrlShortener.Api"
+        "/Csaba.UrlShortener.Api": "${workspaceFolder}/src/Csaba.UrlShortener.Api"
       }
     }
   ]
