@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Csaba.UrlShortener.Entities;
+namespace Csaba.UrlShortener.Data.Entities;
 
 public class User
 {

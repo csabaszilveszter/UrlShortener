@@ -26,6 +26,29 @@ namespace Csaba.UrlShortener.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RequestDatas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Endpoint = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Timestamp = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OS = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IpAddress = table.Column<string>(type: "nvarchar(45)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RequestDatas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RequestDatas_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShortUrls",
                 columns: table => new
                 {
@@ -33,8 +56,8 @@ namespace Csaba.UrlShortener.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UrlShort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ExpiresAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -48,6 +71,11 @@ namespace Csaba.UrlShortener.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_RequestDatas_UserId",
+                table: "RequestDatas",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShortUrls_UserId",
                 table: "ShortUrls",
                 column: "UserId");
@@ -56,6 +84,9 @@ namespace Csaba.UrlShortener.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "RequestDatas");
+
             migrationBuilder.DropTable(
                 name: "ShortUrls");
 

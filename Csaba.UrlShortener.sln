@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csaba.UrlShortener.Data", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csaba.UrlShortener.Api", "src\Csaba.UrlShortener.Api\Csaba.UrlShortener.Api.csproj", "{4E957F4D-9B8B-4A55-A261-5153836D99B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csaba.UrlShortener.Models", "src\Csaba.UrlShortener.Models\Csaba.UrlShortener.Models.csproj", "{1C8B6EC7-4AC7-4BA5-BF33-9E8A377247CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +34,15 @@ Global
 		{4E957F4D-9B8B-4A55-A261-5153836D99B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E957F4D-9B8B-4A55-A261-5153836D99B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E957F4D-9B8B-4A55-A261-5153836D99B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C8B6EC7-4AC7-4BA5-BF33-9E8A377247CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8B6EC7-4AC7-4BA5-BF33-9E8A377247CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8B6EC7-4AC7-4BA5-BF33-9E8A377247CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8B6EC7-4AC7-4BA5-BF33-9E8A377247CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EC3EFBDB-34B4-41C5-856F-86234846675B} = {B0A06358-DF8E-4EA3-B103-54A489C3D984}
 		{14FF90A1-D388-418D-9F5D-E64E25FD6658} = {B0A06358-DF8E-4EA3-B103-54A489C3D984}
 		{4E957F4D-9B8B-4A55-A261-5153836D99B8} = {B0A06358-DF8E-4EA3-B103-54A489C3D984}
+		{1C8B6EC7-4AC7-4BA5-BF33-9E8A377247CE} = {B0A06358-DF8E-4EA3-B103-54A489C3D984}
 	EndGlobalSection
 EndGlobal

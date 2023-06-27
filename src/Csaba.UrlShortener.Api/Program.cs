@@ -1,4 +1,5 @@
 using Csaba.UrlShortener.Data;
+using Csaba.UrlShortener.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDb"));
     });
+
+    builder.Services.AddScoped<IShortUrlService, ShortUrlService>();
 }
 
 var app = builder.Build();

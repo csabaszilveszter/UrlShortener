@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Csaba.UrlShortener.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230620181011_InitialMigration")]
+    [Migration("20230620210008_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,7 +25,40 @@ namespace Csaba.UrlShortener.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Csaba.UrlShortener.Entities.ShortUrl", b =>
+            modelBuilder.Entity("Csaba.UrlShortener.Data.Entities.RequestData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Endpoint")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<string>("OS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("Timestamp")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UserAgent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RequestDatas");
+                });
+
+            modelBuilder.Entity("Csaba.UrlShortener.Data.Entities.ShortUrl", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -33,11 +66,11 @@ namespace Csaba.UrlShortener.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
@@ -55,7 +88,7 @@ namespace Csaba.UrlShortener.Data.Migrations
                     b.ToTable("ShortUrls");
                 });
 
-            modelBuilder.Entity("Csaba.UrlShortener.Entities.User", b =>
+            modelBuilder.Entity("Csaba.UrlShortener.Data.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,9 +107,18 @@ namespace Csaba.UrlShortener.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Csaba.UrlShortener.Entities.ShortUrl", b =>
+            modelBuilder.Entity("Csaba.UrlShortener.Data.Entities.RequestData", b =>
                 {
-                    b.HasOne("Csaba.UrlShortener.Entities.User", "User")
+                    b.HasOne("Csaba.UrlShortener.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Csaba.UrlShortener.Data.Entities.ShortUrl", b =>
+                {
+                    b.HasOne("Csaba.UrlShortener.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
